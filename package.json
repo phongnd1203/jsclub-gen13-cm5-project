@@ -1,0 +1,30 @@
+{
+  "name": "jsclub-gen13-cm5-project",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "packageManager": "pnpm@10.4.1",
+  "dependencies": {
+    "express": "^4.21.2",
+    "portfinder": "^1.0.32"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "eslint": "^9.20.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.1",
+    "prettier-plugin-organize-imports": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
