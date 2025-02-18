@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) installed (version 16.x or later recommended)
+- [Node.js](https://nodejs.org/) installed (LTS version 22.x or later recommended)
 - [pnpm](https://pnpm.io/) installed globally
 
 ## Installation
