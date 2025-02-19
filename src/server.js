@@ -4,7 +4,7 @@ import portfinder from "portfinder";
 import { app } from "./app.js";
 
 async function startHttpServer() {
-  const port = await portfinder.getPortPromise();
+  const port = await portfinder.getPortPromise({ port: 3000 });
   const server = http.createServer(app);
   server.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
