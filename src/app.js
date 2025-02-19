@@ -1,7 +1,7 @@
 import express from "express";
 
+import { healthRouter } from "./routers/health.js";
+
 export const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+app.use("/health", healthRouter);
