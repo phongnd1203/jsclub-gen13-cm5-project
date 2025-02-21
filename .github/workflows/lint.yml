@@ -33,7 +33,7 @@ jobs:
           run_install: true
 
       - name: Run linters
-        uses: wearerequired/lint-action@v2
+        uses: rkuykendall/lint-action@master
         with:
           eslint: true
           prettier: true
