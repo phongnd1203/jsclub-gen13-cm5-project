@@ -4,11 +4,16 @@
  */
 
 /**
- * Health check controller
+ * check controller
  * @param {Request} req - Express request
  * @param {Response} res - Express response
  * @returns {void}
  */
-export function healthController(req, res) {
-  res.json({ status: "ok" });
-}
+
+const homeController = (req, res) => {
+  res.render("home");
+};
+
+export const controllers = {
+  homeController,
+};
