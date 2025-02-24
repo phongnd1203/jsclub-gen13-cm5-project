@@ -10,10 +10,20 @@
  * @returns {void}
  */
 
-const homeController = (req, res) => {
+const Login = (req, res) => {
+  res.render("login");
+};
+
+const signUp = (req, res) => {
+  res.render("signup");
+};
+
+const home = (req, res) => {
   res.render("home");
 };
 
 export const controllers = {
-  homeController,
+  Login,
+  signUp,
+  home,
 };
