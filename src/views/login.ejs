@@ -4,9 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <link rel="stylesheet" href="./public/style.css" />
   </head>
   <body>
-    <div>
+    <div class="header">
+      <h1>Login</h1>
+    </div>
+    <div class="form-container">
       <form action="/" method="post">
         <div>
           <label for="name">Username: </label>
@@ -16,7 +20,7 @@
           <label for="password">Password: </label>
           <input type="password" name="password" placeholder="password" />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Login</button>
         <p>You don't have account? <a href="/signUp">Sign Up</a></p>
       </form>
     </div>
