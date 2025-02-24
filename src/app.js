@@ -8,6 +8,9 @@ export const app = express();
 app.set("views", path.join("src", "views"));
 app.set("view engine", "ejs");
 
+// Thiết lập liên kết tới thư mục public
+app.use(express.static("src"));
+
 // khai báo sử dụng req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
