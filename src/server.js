@@ -1,14 +1,7 @@
-import http from "node:http";
-import portfinder from "portfinder";
+import app from "./app.js"; // Import app as the default export
 
-import { app } from "./app.js";
+const PORT = process.env.PORT || 3000;
 
-async function startHttpServer() {
-  const port = await portfinder.getPortPromise({ port: 3000 });
-  const server = http.createServer(app);
-  server.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
-  });
-}
-
-await startHttpServer();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
