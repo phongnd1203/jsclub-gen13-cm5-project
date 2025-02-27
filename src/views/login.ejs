@@ -3,26 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <link rel="stylesheet" href="./public/style.css" />
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="/public/login.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
   </head>
   <body>
-    <div class="header">
-      <h1>Login</h1>
-    </div>
-    <div class="form-container">
-      <form action="/" method="post">
-        <div>
-          <label for="name">Username: </label>
-          <input type="text" name="username" placeholder="username" />
-        </div>
-        <div>
-          <label for="password">Password: </label>
-          <input type="password" name="password" placeholder="password" />
-        </div>
-        <button type="submit">Login</button>
-        <p>You don't have account? <a href="/signUp">Sign Up</a></p>
-      </form>
+    <div class="wrapper">
+      <div class="box">
+        <form action="/login" method="post">
+          <h1>Đăng nhập</h1>
+          <div class="username">
+            <input
+              type="text"
+              name="username"
+              placeholder="Điền tên đăng nhập"
+              id="username"
+              autocomplete="off"
+              required
+            />
+            <i class="fa-regular fa-envelope"></i>
+          </div>
+          <div class="password">
+            <input
+              type="password"
+              name="password"
+              placeholder="Điền mật khẩu"
+              id="password"
+              autocomplete="off"
+              required
+            />
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <button id="btn" type="submit">Đăng nhập</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

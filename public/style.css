@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://i.postimg.cc/tJ1RdgW0/3.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.box {
+  border-radius: 20px;
+  width: 400px;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 2px #ffc400ef;
+  display: flex;
+  flex-direction: column;
+}
+
+.box h1 {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.username,
+.password {
+  position: relative;
+}
+
+.fa-regular.fa-envelope,
+.fa-solid.fa-lock {
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  color: rgb(256, 256, 256);
+}
+
+.box input[type="text"],
+.box input[type="password"] {
+  font-size: 20px;
+  border: none;
+  background: none;
+  display: block;
+  margin: 30px auto;
+  text-align: center;
+  border: 3px solid #0367fd;
+  padding: 14px 10px;
+  width: 350px;
+  color: #fff;
+  border-radius: 24px;
+  transition: all 0.2s ease-in;
+  outline: none;
+}
+
+.box input[type="text"]:focus,
+.box input[type="password"]:focus {
+  border-color: #ffc400ec;
+}
+
+.wrapper {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+#btn {
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 3px solid #ffc400ec;
+  padding: 14px 35px;
+  outline: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgb(256, 256, 256);
+  border-radius: 20px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+#btn:hover {
+  background-color: #ffc400ec;
+}
+
+nav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  float: left;
+}
+
+nav ul li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  background-color: #111;
+}
