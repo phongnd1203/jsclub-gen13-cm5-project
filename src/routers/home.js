@@ -9,8 +9,8 @@ const createUser = async (req, res) => {
   await newUser.save();
 };
 
-router.get("/", controllers.Login);
-router.post("/", (req, res) => {
+router.get("/Login", controllers.Login);
+router.post("/Login", (req, res) => {
   // createUser(req, res);
   const { username, password } = req.body;
   console.log(">>>>>Login user success");
@@ -29,6 +29,8 @@ router.post("/signUp", (req, res) => {
   res.send("Create user success");
 });
 
-router.get("/home", controllers.home);
+router.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/home.ejs"));
+});
 
 export default router;
