@@ -5,11 +5,10 @@ import { controllers } from "../controllers/home.js";
 import { database } from "../models/user.js";
 
 const __filename = fileURLToPath(import.meta.url); // Add this line to get the current file name
-const __dirname = path.dirname(__filename); // Add this line to get the directory name
 
 const router = express.Router();
 
-const createUser = async (req, res) => {
+const createUser = async (req) => {
   const { username, password } = req.body;
   const newUser = new database.User({ username, password });
   await newUser.save();
