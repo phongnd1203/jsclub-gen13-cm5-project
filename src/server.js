@@ -1,14 +1,14 @@
-import http from "node:http";
-import portfinder from "portfinder";
+import app from "./app.js"; // Import app as the default export
 
-import { app } from "./app.js";
+import mongoose from "mongoose";
 
-async function startHttpServer() {
-  const port = await portfinder.getPortPromise({ port: 3000 });
-  const server = http.createServer(app);
-  server.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
-  });
-}
+mongoose
+  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/Database")
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.error("Connect to MongoDB failed", error));
 
-await startHttpServer();
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
