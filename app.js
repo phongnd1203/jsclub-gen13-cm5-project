@@ -4,11 +4,9 @@ const mongoose = require("mongoose");
 const app = express();
 
 // Connect to MongoDB
-mongoose;
-  .connect("mongodb://localhost:27017/Database", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+
+mongoose
+  .connect("mongodb://localhost:27017/Database")
   .then(() => console.log("Connected to MongoDB"))
   .catch((error) => console.error("Connect to MongoDB failed", error));
 

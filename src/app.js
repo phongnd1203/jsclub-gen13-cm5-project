@@ -13,7 +13,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 // Thiết lập liên kết tới thư mục public
-app.use(express.static("src"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // khai báo sử dụng req.body
 app.use(express.json());
