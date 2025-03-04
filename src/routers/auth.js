@@ -1,7 +1,7 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
-const path = require("path");
-const User = require("../models/user"); // Assuming the user model is in the models directory
+import express from "express";
+import bcrypt from "bcrypt";
+import path from "path";
+import User from "../models/user.js"; // Assuming the user model is in the models directory
 const router = express.Router();
 
 // Route to render login page
