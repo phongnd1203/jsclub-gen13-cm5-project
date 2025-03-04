@@ -1,10 +1,6 @@
 import express from "express";
-import path from "path";
-import { fileURLToPath } from "url"; // Add this line to import fileURLToPath
 import { controllers } from "../controllers/home.js";
 import { database } from "../models/user.js";
-
-const __filename = fileURLToPath(import.meta.url); // Add this line to get the current file name
 
 const router = express.Router();
 
