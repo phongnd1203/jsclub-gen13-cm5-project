@@ -8,7 +8,7 @@ mongoose
 // Define userschema
 const userSchema = new mongoose.Schema({
   username: String,
-  password: String, 
+  password: String,
   time: { type: Date, default: Date.now },
 });
 const User = mongoose.model("users", userSchema);

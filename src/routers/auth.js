@@ -1,5 +1,5 @@
-import express from "express";
 import bcrypt from "bcrypt";
+import express from "express";
 import path from "path";
 import User from "../models/user.js"; // Assuming the user model is in the models directory
 const router = express.Router();
