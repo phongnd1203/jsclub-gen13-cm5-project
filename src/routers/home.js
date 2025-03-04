@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url"; // Add this line to import fileURLToPath
 import { controllers } from "../controllers/home.js";
-import { database } from "../mongodb.js";
+import { database } from "../models/user.js";
 
 const __filename = fileURLToPath(import.meta.url); // Add this line to get the current file name
 const __dirname = path.dirname(__filename); // Add this line to get the directory name
@@ -15,7 +15,7 @@ const createUser = async (req, res) => {
   await newUser.save();
 };
 
-router.get("/Login", controllers.Login);
+router.get("/Login", controllers.login);
 router.post("/Login", (req, res) => {
   // createUser(req, res);
   const { username, password } = req.body;

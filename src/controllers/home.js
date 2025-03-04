@@ -10,7 +10,7 @@
  * @returns {void}
  */
 
-const Login = (req, res) => {
+const login = (req, res) => {
   res.render("login");
 };
 
@@ -23,7 +23,7 @@ const home = (req, res) => {
 };
 
 export const controllers = {
-  Login,
+  login,
   signUp,
   home,
 };
