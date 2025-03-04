@@ -2,17 +2,20 @@
   "name": "jsclub-gen13-cm5-project",
   "version": "0.0.0",
   "license": "MIT",
-  "type": "module",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "type": "module"
   },
   "packageManager": "pnpm@10.4.1",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "mongoose": "^8.10.1",
     "portfinder": "^1.0.32"
   },
   "devDependencies": {

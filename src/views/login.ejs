@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="/login.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="box">
+        <form action="/login" method="post">
+          <h1>Đăng nhập</h1>
+          <div class="username">
+            <input
+              type="text"
+              name="username"
+              placeholder="Điền tên đăng nhập"
+              id="username"
+              autocomplete="off"
+              required
+            />
+            <i class="fa-regular fa-envelope"></i>
+          </div>
+          <div class="password">
+            <input
+              type="password"
+              name="password"
+              placeholder="Điền mật khẩu"
+              id="password"
+              autocomplete="off"
+              required
+            />
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <button id="btn" type="submit">Đăng nhập</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
