@@ -8,8 +8,8 @@
     "dev": "nodemon src/server.js",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "type": "module"
   },
+  "type": "module",
   "packageManager": "pnpm@10.4.1",
   "dependencies": {
     "bcrypt": "^5.1.1",
