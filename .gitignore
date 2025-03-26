@@ -1,18 +1,1 @@
-# Gitignore template for Node.js projects
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# Dependencies
-node_modules/
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# Misc
-.DS_Store
-
-# Visual Studio Code
-.vscode/
-!.vscode/settings.json
-!.vscode/extensions.json
+node_modules

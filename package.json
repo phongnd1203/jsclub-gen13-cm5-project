@@ -1,34 +1,33 @@
 {
-  "name": "jsclub-gen13-cm5-project",
-  "version": "0.0.0",
-  "license": "MIT",
-  "main": "src/server.js",
+  "name": "food-review",
+  "version": "1.0.0",
+  "description": "Food Review Application",
+  "main": "src/index.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "lint": "eslint .",
-    "format": "prettier --write .",
+    "start": "node src/index.js",
+    "dev": "concurrently \"nodemon src/index.js\" \"npm run build:css\"",
+    "build:css": "tailwindcss -i ./src/public/css/input.css -o ./src/public/css/output.css --watch"
   },
-  "type": "module",
-  "packageManager": "pnpm@10.4.1",
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "ejs": "^3.1.10",
-    "express": "^4.21.2",
-    "mongoose": "^8.10.1",
-    "portfinder": "^1.0.32"
+    "bcryptjs": "^2.4.3",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "multer": "^1.4.5-lts.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.20.0",
-    "eslint": "^9.20.1",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-prettier": "^5.2.3",
-    "globals": "^15.15.0",
-    "nodemon": "^3.1.9",
-    "prettier": "^3.5.1",
-    "prettier-plugin-organize-imports": "^4.1.0"
-  },
-  "engines": {
-    "node": ">=22"
+    "@tailwindcss/forms": "^0.5.10",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.2",
+    "tailwindcss": "^3.4.0"
   }
 }
