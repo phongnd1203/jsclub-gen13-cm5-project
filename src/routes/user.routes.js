@@ -11,7 +11,7 @@ router.get('/register', (req, res) => {
 
 // Login page
 router.get('/login', (req, res) => {
-  res.render('users/login');
+  res.render('users/login', { error: req.query.error });
 });
 
 // Profile page
@@ -43,10 +43,32 @@ router.post('/register', async (req, res) => {
 
 // Login user
 router.post('/login', (req, res, next) => {
+  const { email, password } = req.body;
+
+  // Basic validation
+  if (!email || !password) {
+    return res.redirect('/api/users/login?error=Please fill in all fields');
+  }
+
+  // Email format validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.redirect('/api/users/login?error=Please enter a valid email address');
+  }
+
+  // Password length validation
+  if (password.length < 6) {
+    return res.redirect('/api/users/login?error=Password must be at least 6 characters');
+  }
+
   passport.authenticate('local', async (err, user, info) => {
     try {
-      if (err) return next(err);
-      if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+      if (err) {
+        return res.redirect('/api/users/login?error=An error occurred during login');
+      }
+      if (!user) {
+        return res.redirect('/api/users/login?error=Invalid email or password');
+      }
 
       const token = userService.generateToken(user);
 
@@ -58,7 +80,7 @@ router.post('/login', (req, res, next) => {
 
       return res.redirect('/');
     } catch (error) {
-      return next(error);
+      return res.redirect('/api/users/login?error=An error occurred during login');
     }
   })(req, res, next);
 });
