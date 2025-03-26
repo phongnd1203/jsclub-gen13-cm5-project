@@ -46,7 +46,9 @@ require("./config/passport");
 // Routes
 app.use("/", require("./routes/home.routes"));
 app.use("/api/users", require("./routes/user.routes"));
-app.use("/api/restaurants", require("./routes/restaurant.routes"));
+app.use('/api/restaurants', require('./routes/restaurant.routes'));
+// app.use('/api/dishes', require('./routes/dish.routes'));
+// app.use('/api/categories', require('./routes/category.routes'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
