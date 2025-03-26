@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurants - Food Review</title>
+    <link href="/css/output.css" rel="stylesheet" />
+  </head>
+  <body class="bg-gray-100">
+    <div class="min-h-screen p-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold text-gray-900">Restaurants</h1>
+          <% if (user) { %>
+          <a
+            href="/api/restaurants/create"
+            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+          >
+            Add Restaurant
+          </a>
+          <% } %>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+          <form id="filterForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-700"
+                >Search by Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              />
+            </div>
+            <div>
+              <label
+                for="categoryIds"
+                class="block text-sm font-medium text-gray-700"
+                >Categories</label
+              >
+              <select
+                multiple
+                id="categoryIds"
+                name="categoryIds"
+                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              >
+                <% categories.forEach(category => { %>
+                <option value="<%= category._id %>">
+                  <%= category.name %>
+                </option>
+                <% }); %>
+              </select>
+            </div>
+            <div>
+              <button
+                type="submit"
+                class="w-full mt-6 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Restaurant List -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% restaurants.forEach(restaurant => { %>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <% if (restaurant.images && restaurant.images.length > 0) { %>
+            <img
+              src="<%= restaurant.images[0] %>"
+              alt="<%= restaurant.name %>"
+              class="w-full h-48 object-cover"
+            />
+            <% } %>
+            <div class="p-6">
+              <h2 class="text-xl font-semibold text-gray-900 mb-2">
+                <%= restaurant.name %>
+              </h2>
+              <p class="text-gray-600 mb-4"><%= restaurant.address %></p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <span class="text-yellow-400">★</span>
+                  <span class="ml-1 text-gray-600"
+                    ><%= restaurant.averageRating.toFixed(1) %></span
+                  >
+                </div>
+                <a
+                  href="/api/restaurants/<%= restaurant._id %>"
+                  class="text-indigo-600 hover:text-indigo-800"
+                  >View Details</a
+                >
+              </div>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("filterForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const params = new URLSearchParams();
+
+          for (const [key, value] of formData.entries()) {
+            if (value) params.append(key, value);
+          }
+
+          window.location.href = `/api/restaurants?${params.toString()}`;
+        });
+    </script>
+  </body>
+</html>
