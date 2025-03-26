@@ -1,120 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Restaurants - Food Review</title>
-    <link href="/css/output.css" rel="stylesheet" />
-  </head>
-  <body class="bg-gray-100">
-    <div class="min-h-screen p-6">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-8">
-          <h1 class="text-3xl font-bold text-gray-900">Restaurants</h1>
-          <% if (user) { %>
-          <a
-            href="/api/restaurants/create"
-            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-          >
-            Add Restaurant
-          </a>
-          <% } %>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurants - Food Review</title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Restaurants</h1>
 
-        <!-- Search and Filter Section -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-          <form id="filterForm" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label for="name" class="block text-sm font-medium text-gray-700"
-                >Search by Name</label
-              >
-              <input
-                type="text"
-                id="name"
-                name="name"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              />
-            </div>
-            <div>
-              <label
-                for="categoryIds"
-                class="block text-sm font-medium text-gray-700"
-                >Categories</label
-              >
-              <select
-                multiple
-                id="categoryIds"
-                name="categoryIds"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              >
-                <% categories.forEach(category => { %>
-                <option value="<%= category._id %>">
-                  <%= category.name %>
-                </option>
-                <% }); %>
-              </select>
-            </div>
-            <div>
-              <button
-                type="submit"
-                class="w-full mt-6 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-              >
-                Search
-              </button>
-            </div>
-          </form>
-        </div>
-
-        <!-- Restaurant List -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <% restaurants.forEach(restaurant => { %>
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <% if (restaurant.images && restaurant.images.length > 0) { %>
-            <img
-              src="<%= restaurant.images[0] %>"
-              alt="<%= restaurant.name %>"
-              class="w-full h-48 object-cover"
-            />
-            <% } %>
-            <div class="p-6">
-              <h2 class="text-xl font-semibold text-gray-900 mb-2">
-                <%= restaurant.name %>
-              </h2>
-              <p class="text-gray-600 mb-4"><%= restaurant.address %></p>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                  <span class="text-yellow-400">★</span>
-                  <span class="ml-1 text-gray-600"
-                    ><%= restaurant.averageRating.toFixed(1) %></span
-                  >
-                </div>
-                <a
-                  href="/api/restaurants/<%= restaurant._id %>"
-                  class="text-indigo-600 hover:text-indigo-800"
-                  >View Details</a
-                >
-              </div>
-            </div>
-          </div>
-          <% }); %>
-        </div>
-      </div>
     </div>
 
-    <script>
-      document
-        .getElementById("filterForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(e.target);
-          const params = new URLSearchParams();
+    <!-- Search and Filter Form -->
+    <form action="/restaurants" method="GET" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label for="keyword" class="block text-sm font-medium text-gray-700">Search</label>
+          <input type="text" id="keyword" name="keyword" value="<%= query.keyword %>" 
+                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        </div>
+        <div>
+          <label for="categoryIds" class="block text-sm font-medium text-gray-700">Categories</label>
+          <select multiple id="categoryIds" name="categoryIds" 
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+ 
+          </select>
+        </div>
+        <div class="flex items-end">
+          <button type="submit" class="w-full bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+            Search
+          </button>
+        </div>
+      </div>
+    </form>
 
-          for (const [key, value] of formData.entries()) {
-            if (value) params.append(key, value);
-          }
-
-          window.location.href = `/api/restaurants?${params.toString()}`;
-        });
-    </script>
-  </body>
+    <!-- Restaurant List -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% restaurants.forEach(restaurant => { %>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <% if (restaurant.images && restaurant.images.length > 0) { %>
+            <img src="<%= restaurant.images[0] %>" alt="<%= restaurant.name %>" class="w-full h-48 object-cover">
+          <% } %>
+          <div class="p-6">
+            <h2 class="text-xl font-semibold text-gray-900 mb-2">
+              <%= restaurant.name %>
+            </h2>
+            <p class="text-gray-600 mb-4"><%= restaurant.address %></p>
+            <div class="flex items-center mb-4">
+              <div class="flex text-yellow-400">
+                <% for(let i = 0; i < 5; i++) { %>
+                  <svg class="w-5 h-5 <%= i < Math.round(restaurant.averageRating) ? 'fill-current' : 'fill-gray-300' %>" 
+                       viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  </svg>
+                <% } %>
+                <span class="ml-2 text-gray-600">
+                  <%= restaurant.averageRating.toFixed(1) %>
+                </span>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <% restaurant.categoryIds.forEach(category => { %>
+                <span class="px-2 py-1 bg-gray-100 text-gray-600 text-sm rounded-full">
+                  <%= category.name %>
+                </span>
+              <% }); %>
+            </div>
+            <a href="/restaurants/<%= restaurant._id %>" 
+               class="block text-center bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
+              View Details
+            </a>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</body>
 </html>

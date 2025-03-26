@@ -34,21 +34,21 @@ exports.isModerator = (req, res, next) => {
 
 exports.isOwnerOrAdmin = async (req, res, next) => {
   try {
-    const resource = await req.model.findById(req.params.id);
-    if (!resource) {
-      return res.status(404).json({ message: "Resource not found" });
+    if (req.user.role === 'admin') {
+      return next();
     }
 
-    if (
-      req.user.role === "admin" ||
-      resource.ownerId.toString() === req.user._id.toString()
-    ) {
-      req.resource = resource;
-      next();
-    } else {
-      res.status(403).json({ message: "Access denied. Owner or admin only." });
+    const restaurant = await Restaurant.findById(req.params.id);
+    if (!restaurant) {
+      return res.status(404).json({ message: 'Restaurant not found' });
     }
+
+    if (restaurant.ownerId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+
+    next();
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error.message });
   }
 };
