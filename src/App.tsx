@@ -15,9 +15,7 @@ import {
   Beer,
   Monitor,
   Eclipse,
-  Cake,
   Store,
-  Wine,
   X,
   Heart,
 } from "lucide-react";
@@ -482,24 +480,35 @@ function App() {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              {userProfile && (
-                <div className="flex items-center space-x-2">
-                  <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
-                    {userProfile.avatar_url ? (
-                      <img
-                        src={userProfile.avatar_url}
-                        alt="User Avatar"
-                        className="h-full w-full object-cover"
-                      />
-                    ) : (
-                      <User className="h-6 w-6 text-gray-500" />
-                    )}
+              <button
+                onClick={() => {
+                  if (user) {
+                    setShowProfile(true);
+                  } else {
+                    setIsAuthModalOpen(true);
+                  }
+                }}
+                className="text-gray-600 flex flex-col items-center"
+              >
+                {userProfile && (
+                  <div className="flex items-center space-x-2">
+                    <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
+                      {userProfile.avatar_url ? (
+                        <img
+                          src={userProfile.avatar_url}
+                          alt="User Avatar"
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <User className="h-6 w-6 text-gray-500" />
+                      )}
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">
+                      {userProfile.username}
+                    </span>
                   </div>
-                  <span className="text-sm font-medium text-gray-700">
-                    {userProfile.username}
-                  </span>
-                </div>
-              )}
+                )}
+              </button>
               <button
                 onClick={handleCreatePost}
                 className="text-gray-600 hover:text-orange-500"
@@ -531,7 +540,7 @@ function App() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by name, category, tags, or location..."
+                placeholder="Tìm kiếm theo tên quán, địa chỉ, món ăn..."
                 className="w-full px-4 py-2 pl-10 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
               <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
