@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   User,
-  Camera,
   Mail,
   Edit2,
   Check,
