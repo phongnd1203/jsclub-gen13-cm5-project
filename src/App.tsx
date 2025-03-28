@@ -94,6 +94,10 @@ function App() {
   const [restaurantLikes, setRestaurantLikes] = useState<RestaurantLikes>({});
   const [likingRestaurant, setLikingRestaurant] = useState<string | null>(null);
   const { user, setUser, signOut } = useAuthStore();
+  const [userProfile, setUserProfile] = useState<{
+    username: string;
+    avatar_url: string | null;
+  } | null>(null);
 
   const categories: Category[] = [
     { id: "Bữa sáng", name: "Bữa sáng", icon: <Sun className="h-6 w-6" /> },
@@ -178,6 +182,27 @@ function App() {
       fetchLikes();
     }
   }, [reviews, user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchUserProfile();
+    }
+  }, [user]);
+
+  const fetchUserProfile = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("username, avatar_url")
+        .eq("id", user.id)
+        .single();
+
+      if (error) throw error;
+      setUserProfile(data);
+    } catch (err) {
+      console.error("Error fetching user profile:", err);
+    }
+  };
 
   const fetchLikes = async () => {
     try {
@@ -424,6 +449,7 @@ function App() {
   const handleAuthClick = () => {
     if (user) {
       signOut();
+      setUserProfile(null); // Clear user profile on logout
     } else {
       setIsAuthModalOpen(true);
     }
@@ -456,6 +482,24 @@ function App() {
               </h1>
             </div>
             <div className="flex items-center space-x-4">
+              {userProfile && (
+                <div className="flex items-center space-x-2">
+                  <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden">
+                    {userProfile.avatar_url ? (
+                      <img
+                        src={userProfile.avatar_url}
+                        alt="User Avatar"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <User className="h-6 w-6 text-gray-500" />
+                    )}
+                  </div>
+                  <span className="text-sm font-medium text-gray-700">
+                    {userProfile.username}
+                  </span>
+                </div>
+              )}
               <button
                 onClick={handleCreatePost}
                 className="text-gray-600 hover:text-orange-500"
