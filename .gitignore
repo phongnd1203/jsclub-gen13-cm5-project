@@ -1,5 +1,4 @@
 # Logs
-<<<<<<< HEAD
 logs/
 *.log
 npm-debug.log*
@@ -50,33 +49,11 @@ coverage/
 .vscode/
 !.vscode/extensions.json
 .idea/
-=======
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-.env
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
->>>>>>> c3c2536d455babfb5aff88526d4b0152142d8daf
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-<<<<<<< HEAD
 
 # Compiled binary addons
 build/Release/
@@ -104,6 +81,3 @@ firebase-debug.*
 .grunt/
 lib-cov/
 .vercel
-=======
-*.sw?
->>>>>>> c3c2536d455babfb5aff88526d4b0152142d8daf
