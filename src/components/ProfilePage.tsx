@@ -218,7 +218,7 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
             className="flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
           >
             <Edit2 className="h-4 w-4 mr-2" />
-            Edit Profile
+            Sửa hồ sơ
           </button>
         )}
       </div>
