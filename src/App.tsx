@@ -510,12 +510,6 @@ function App() {
                 )}
               </button>
               <button
-                onClick={handleCreatePost}
-                className="text-gray-600 hover:text-orange-500"
-              >
-                <Camera className="h-6 w-6" />
-              </button>
-              <button
                 onClick={handleAuthClick}
                 className="flex items-center space-x-1 text-gray-600 hover:text-orange-500"
               >
