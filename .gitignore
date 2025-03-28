@@ -1,26 +1,82 @@
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Environment variables
 .env
+.env.local
+.env.*.local
 
-node_modules
-dist
-dist-ssr
-*.local
+# Dependency directories
+node_modules/
+jspm_packages/
 
-# Editor directories and files
-.vscode/*
+# Build output
+.next/
+out/
+dist/
+dist-ssr/
+
+# Serverless build output
+.vercel/
+.netlify/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# Coverage reports
+coverage/
+.nyc_output/
+
+# Temporary files
+*.swp
+*.swo
+*.swn
+*.tmp
+*.temp
+
+# Debugging & lock files
+*.lock
+.lock-wscript
+
+# IDE/editor-specific files
+.vscode/
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+
+# Compiled binary addons
+build/Release/
+
+# Firebase & Supabase related
+firebase-debug.log
+firebase-debug.*
+.supabase/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# ESLint cache
+.eslintcache
+
+# Next.js specific
+.next/cache/
+.next/static/
+
+# Optional npm cache directory
+.npm/
+.node_repl_history
+
+# Miscellaneous
+.grunt/
+lib-cov/
