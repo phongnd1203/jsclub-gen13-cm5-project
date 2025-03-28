@@ -449,6 +449,7 @@ function App() {
   const handleAuthClick = () => {
     if (user) {
       signOut();
+      setUserProfile(null); // Clear user profile on logout
     } else {
       setIsAuthModalOpen(true);
     }
