@@ -1,12 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Star, Camera, User, LogOut, Trash2, Coffee, Sun, Utensils, Cookie, Moon, Beer, Monitor, Eclipse, Cake, Store, Wine, X, Heart } from 'lucide-react';
-import { AuthModal } from './components/AuthModal';
-import { CreatePostModal } from './components/CreatePostModal';
-import { ReviewDetailsModal } from './components/ReviewDetailsModal';
-import { ProfilePage } from './components/ProfilePage';
-import { useAuthStore } from './store/authStore';
-import { supabase } from './lib/supabase';
-import { RestaurantMood } from './components/RestaurantMood';
+import React, { useState, useEffect } from "react";
+import {
+  Search,
+  MapPin,
+  Star,
+  Camera,
+  User,
+  LogOut,
+  Trash2,
+  Coffee,
+  Sun,
+  Utensils,
+  Cookie,
+  Moon,
+  Beer,
+  Monitor,
+  Eclipse,
+  Cake,
+  Store,
+  Wine,
+  X,
+  Heart,
+} from "lucide-react";
+import { AuthModal } from "./components/AuthModal";
+import { CreatePostModal } from "./components/CreatePostModal";
+import { ReviewDetailsModal } from "./components/ReviewDetailsModal";
+import { ProfilePage } from "./components/ProfilePage";
+import { useAuthStore } from "./store/authStore";
+import { supabase } from "./lib/supabase";
+import { RestaurantMood } from "./components/RestaurantMood";
 
 interface Review {
   id: string;
@@ -64,8 +85,10 @@ function App() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);
-  const [restaurantRatings, setRestaurantRatings] = useState<RestaurantRating>({});
-  const [searchQuery, setSearchQuery] = useState('');
+  const [restaurantRatings, setRestaurantRatings] = useState<RestaurantRating>(
+    {}
+  );
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Review[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [restaurantLikes, setRestaurantLikes] = useState<RestaurantLikes>({});
@@ -73,15 +96,23 @@ function App() {
   const { user, setUser, signOut } = useAuthStore();
 
   const categories: Category[] = [
-    { id: 'Bữa sáng', name: 'Bữa sáng', icon: <Sun className="h-6 w-6" /> },
-    { id: 'Bữa trưa', name: 'Bữa trưa', icon: <Utensils className="h-6 w-6" /> },
-    { id: 'Bữa tối', name: 'Bữa tối', icon: <Moon className="h-6 w-6" /> },
-    { id: 'Coffee', name: 'Coffee', icon: <Coffee className="h-6 w-6" /> },
-    { id: 'Quán ăn vặt', name: 'Quán ăn vặt', icon: <Cookie className="h-6 w-6" /> },
-    { id: 'Beer', name: 'Beer', icon: <Beer className="h-6 w-6" /> },
-    { id: 'Billard', name: 'Billard', icon: <Eclipse className="h-6 w-6" /> },
-    { id: 'Siêu thị', name: 'Siêu thị', icon: <Store className="h-6 w-6" /> },
-    { id: 'Cyber', name: 'Cyber', icon: <Monitor className="h-6 w-6" /> },
+    { id: "Bữa sáng", name: "Bữa sáng", icon: <Sun className="h-6 w-6" /> },
+    {
+      id: "Bữa trưa",
+      name: "Bữa trưa",
+      icon: <Utensils className="h-6 w-6" />,
+    },
+    { id: "Bữa tối", name: "Bữa tối", icon: <Moon className="h-6 w-6" /> },
+    { id: "Coffee", name: "Coffee", icon: <Coffee className="h-6 w-6" /> },
+    {
+      id: "Quán ăn vặt",
+      name: "Quán ăn vặt",
+      icon: <Cookie className="h-6 w-6" />,
+    },
+    { id: "Beer", name: "Beer", icon: <Beer className="h-6 w-6" /> },
+    { id: "Billard", name: "Billard", icon: <Eclipse className="h-6 w-6" /> },
+    { id: "Siêu thị", name: "Siêu thị", icon: <Store className="h-6 w-6" /> },
+    { id: "Cyber", name: "Cyber", icon: <Monitor className="h-6 w-6" /> },
   ];
 
   useEffect(() => {
@@ -107,16 +138,30 @@ function App() {
       if (searchQuery) {
         setIsSearching(true);
         const query = searchQuery.toLowerCase();
-        const results = reviews.filter(review => {
-          const matchName = review.restaurant.name.toLowerCase().includes(query);
-          const matchCategory = review.restaurant.category?.name.toLowerCase().includes(query);
-          const matchTags = review.restaurant.tags.some(tag => 
+        const results = reviews.filter((review) => {
+          const matchName = review.restaurant.name
+            .toLowerCase()
+            .includes(query);
+          const matchCategory = review.restaurant.category?.name
+            .toLowerCase()
+            .includes(query);
+          const matchTags = review.restaurant.tags.some((tag) =>
             tag.name.toLowerCase().includes(query)
           );
-          const matchAddress = review.restaurant.address.toLowerCase().includes(query);
-          const matchDescription = review.restaurant.description?.toLowerCase().includes(query);
+          const matchAddress = review.restaurant.address
+            .toLowerCase()
+            .includes(query);
+          const matchDescription = review.restaurant.description
+            ?.toLowerCase()
+            .includes(query);
 
-          return matchName || matchCategory || matchTags || matchAddress || matchDescription;
+          return (
+            matchName ||
+            matchCategory ||
+            matchTags ||
+            matchAddress ||
+            matchDescription
+          );
         });
         setSearchResults(results);
         setIsSearching(false);
@@ -136,37 +181,44 @@ function App() {
 
   const fetchLikes = async () => {
     try {
-      const restaurantIds = [...new Set(reviews.map(review => review.restaurant.id))];
-      
+      const restaurantIds = [
+        ...new Set(reviews.map((review) => review.restaurant.id)),
+      ];
+
       const { data: likesData, error: likesError } = await supabase
-        .from('post_likes')
-        .select('restaurant_id')
-        .in('restaurant_id', restaurantIds);
+        .from("post_likes")
+        .select("restaurant_id")
+        .in("restaurant_id", restaurantIds);
 
       if (likesError) throw likesError;
 
-      const { data: userLikes, error: userLikesError } = user ? await supabase
-        .from('post_likes')
-        .select('restaurant_id')
-        .eq('user_id', user.id)
-        .in('restaurant_id', restaurantIds) : { data: [], error: null };
+      const { data: userLikes, error: userLikesError } = user
+        ? await supabase
+            .from("post_likes")
+            .select("restaurant_id")
+            .eq("user_id", user.id)
+            .in("restaurant_id", restaurantIds)
+        : { data: [], error: null };
 
       if (userLikesError) throw userLikesError;
 
-      const userLikedRestaurants = new Set(userLikes?.map(like => like.restaurant_id) || []);
-      
+      const userLikedRestaurants = new Set(
+        userLikes?.map((like) => like.restaurant_id) || []
+      );
+
       const likes: RestaurantLikes = {};
-      restaurantIds.forEach(id => {
-        const count = likesData?.filter(like => like.restaurant_id === id).length || 0;
+      restaurantIds.forEach((id) => {
+        const count =
+          likesData?.filter((like) => like.restaurant_id === id).length || 0;
         likes[id] = {
           count,
-          hasLiked: userLikedRestaurants.has(id)
+          hasLiked: userLikedRestaurants.has(id),
         };
       });
 
       setRestaurantLikes(likes);
     } catch (err) {
-      console.error('Error fetching likes:', err);
+      console.error("Error fetching likes:", err);
     }
   };
 
@@ -182,32 +234,30 @@ function App() {
 
       if (hasLiked) {
         const { error } = await supabase
-          .from('post_likes')
+          .from("post_likes")
           .delete()
-          .eq('restaurant_id', restaurantId)
-          .eq('user_id', user.id);
+          .eq("restaurant_id", restaurantId)
+          .eq("user_id", user.id);
 
         if (error) throw error;
       } else {
-        const { error } = await supabase
-          .from('post_likes')
-          .insert({
-            restaurant_id: restaurantId,
-            user_id: user.id
-          });
+        const { error } = await supabase.from("post_likes").insert({
+          restaurant_id: restaurantId,
+          user_id: user.id,
+        });
 
         if (error) throw error;
       }
 
-      setRestaurantLikes(prev => ({
+      setRestaurantLikes((prev) => ({
         ...prev,
         [restaurantId]: {
           count: prev[restaurantId].count + (hasLiked ? -1 : 1),
-          hasLiked: !hasLiked
-        }
+          hasLiked: !hasLiked,
+        },
       }));
     } catch (err) {
-      console.error('Error toggling like:', err);
+      console.error("Error toggling like:", err);
     } finally {
       setLikingRestaurant(null);
     }
@@ -217,8 +267,9 @@ function App() {
     try {
       setLoading(true);
       let query = supabase
-        .from('reviews')
-        .select(`
+        .from("reviews")
+        .select(
+          `
           id,
           rating,
           comment,
@@ -238,12 +289,13 @@ function App() {
             id,
             email
           )
-        `)
-        .order('rating', { ascending: false })
-        .order('created_at', { ascending: false });
+        `
+        )
+        .order("rating", { ascending: false })
+        .order("created_at", { ascending: false });
 
       if (activeCategory) {
-        query = query.eq('restaurant.category.name', activeCategory);
+        query = query.eq("restaurant.category.name", activeCategory);
       }
 
       const { data, error } = await query;
@@ -251,54 +303,61 @@ function App() {
       if (error) throw error;
 
       // Transform the data and fetch user avatars
-      const transformedData = await Promise.all((data || [])
-        .filter(review => 
-          review.restaurant && 
-          review.restaurant.category &&
-          review.user && 
-          review.user.email
-        )
-        .map(async review => {
-          // Fetch user avatar
-          const { data: profileData } = await supabase
-            .from('profiles')
-            .select('avatar_url')
-            .eq('id', review.user.id)
-            .single();
+      const transformedData = await Promise.all(
+        (data || [])
+          .filter(
+            (review) =>
+              review.restaurant &&
+              review.restaurant.category &&
+              review.user &&
+              review.user.email
+          )
+          .map(async (review) => {
+            // Fetch user avatar
+            const { data: profileData } = await supabase
+              .from("profiles")
+              .select("avatar_url")
+              .eq("id", review.user.id)
+              .single();
 
-          return {
-            ...review,
-            restaurant: {
-              ...review.restaurant,
-              tags: review.restaurant.tags.map((t: any) => t.tag)
-            },
-            user: {
-              ...review.user,
-              avatar_url: profileData?.avatar_url
-            }
-          };
-        }));
+            return {
+              ...review,
+              restaurant: {
+                ...review.restaurant,
+                tags: review.restaurant.tags.map((t: any) => t.tag),
+              },
+              user: {
+                ...review.user,
+                avatar_url: profileData?.avatar_url,
+              },
+            };
+          })
+      );
 
-      const restaurantIds = [...new Set(transformedData.map(review => review.restaurant.id))];
+      const restaurantIds = [
+        ...new Set(transformedData.map((review) => review.restaurant.id)),
+      ];
       const ratings: RestaurantRating = {};
 
       await Promise.all(
         restaurantIds.map(async (id) => {
           try {
-            const { data: avgData } = await supabase
-              .rpc('get_restaurant_rating', { restaurant_id: id });
+            const { data: avgData } = await supabase.rpc(
+              "get_restaurant_rating",
+              { restaurant_id: id }
+            );
 
             const { data: countData } = await supabase
-              .from('ratings')
-              .select('id', { count: 'exact' })
-              .eq('restaurant_id', id);
+              .from("ratings")
+              .select("id", { count: "exact" })
+              .eq("restaurant_id", id);
 
             ratings[id] = {
               average: Number(avgData) || 0,
-              count: countData?.length || 0
+              count: countData?.length || 0,
             };
           } catch (err) {
-            console.error('Error fetching ratings for restaurant:', id, err);
+            console.error("Error fetching ratings for restaurant:", id, err);
             ratings[id] = { average: 0, count: 0 };
           }
         })
@@ -310,13 +369,15 @@ function App() {
         if (ratingB !== ratingA) {
           return ratingB - ratingA;
         }
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
       });
 
       setRestaurantRatings(ratings);
       setReviews(sortedData);
     } catch (err) {
-      console.error('Error fetching reviews:', err);
+      console.error("Error fetching reviews:", err);
     } finally {
       setLoading(false);
     }
@@ -324,37 +385,37 @@ function App() {
 
   const handleDeleteReview = async (reviewId: string) => {
     if (!user) return;
-    
+
     try {
       setDeleting(reviewId);
 
       // Check if user is admin
       const { data: userData, error: userError } = await supabase
-        .from('users')
-        .select('email')
-        .eq('id', user.id)
+        .from("users")
+        .select("email")
+        .eq("id", user.id)
         .single();
 
       if (userError) throw userError;
 
-      const isAdmin = userData?.email === 'linhdeptrai@gmail.com';
+      const isAdmin = userData?.email === "linhdeptrai@gmail.com";
 
       // Delete review if user is admin or owner
       const { error } = await supabase
-        .from('reviews')
+        .from("reviews")
         .delete()
-        .eq('id', reviewId)
-        .eq(isAdmin ? 'id' : 'user_id', isAdmin ? reviewId : user.id);
+        .eq("id", reviewId)
+        .eq(isAdmin ? "id" : "user_id", isAdmin ? reviewId : user.id);
 
       if (error) throw error;
-      
-      setReviews(reviews.filter(review => review.id !== reviewId));
-      
+
+      setReviews(reviews.filter((review) => review.id !== reviewId));
+
       if (selectedReview?.id === reviewId) {
         setSelectedReview(null);
       }
     } catch (err) {
-      console.error('Error deleting review:', err);
+      console.error("Error deleting review:", err);
     } finally {
       setDeleting(null);
     }
@@ -390,7 +451,7 @@ function App() {
             <div className="flex items-center">
               <h1 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-transparent bg-clip-text">
-                  HOLA blogs
+                  Riviu HOLA
                 </span>
               </h1>
             </div>
@@ -419,7 +480,7 @@ function App() {
               </button>
             </div>
           </div>
-          
+
           <div className="mt-3 relative">
             <div className="relative">
               <input
@@ -432,7 +493,7 @@ function App() {
               <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
+                  onClick={() => setSearchQuery("")}
                   className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
                 >
                   <X className="h-5 w-5" />
@@ -450,14 +511,18 @@ function App() {
 
       <main className="container mx-auto px-4 pt-32 pb-20">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-3 mb-6">
-          {categories.map(category => (
+          {categories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setActiveCategory(activeCategory === category.name ? null : category.name)}
+              onClick={() =>
+                setActiveCategory(
+                  activeCategory === category.name ? null : category.name
+                )
+              }
               className={`flex flex-col items-center justify-center p-3 rounded-lg transition-colors ${
                 activeCategory === category.name
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-white text-gray-600 hover:bg-orange-50'
+                  ? "bg-orange-500 text-white"
+                  : "bg-white text-gray-600 hover:bg-orange-50"
               }`}
             >
               {category.icon}
@@ -476,40 +541,69 @@ function App() {
             <div className="col-span-2 text-center py-8">
               <p className="text-gray-600">
                 {searchQuery
-                  ? 'No reviews found matching your search.'
+                  ? "No reviews found matching your search."
                   : activeCategory
                   ? `No reviews yet for ${activeCategory} restaurants.`
-                  : 'No reviews yet. Be the first to add one!'}
+                  : "Hãy đăng nhập hoặc đăng ký để xem và đánh giá"}
               </p>
+              <div>
+                <div className="flex flex-col justify-center items-center h-screen">
+                  <a
+                    href="#"
+                    onClick={handleAuthClick}
+                    className="flex items-center justify-center w-20 h-20 bg-green-500 text-white rounded-full shadow-xl hover:bg-green-600 transition transform -translate-y-80"
+                  >
+                    {user ? (
+                      <LogOut className="h-10 w-10" />
+                    ) : (
+                      <User className="h-10 w-10" />
+                    )}
+                  </a>
+                  <p className="mt-4 text-lg text-gray-700 -translate-y-80">
+                    Đăng Nhập
+                  </p>
+                </div>
+              </div>
             </div>
           ) : (
             displayedReviews.map((review) => (
-              <div 
-                key={review.id} 
+              <div
+                key={review.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform hover:scale-[1.02]"
                 onClick={() => setSelectedReview(review)}
               >
                 <img
-                  src={review.restaurant.image_url || 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38'}
+                  src={
+                    review.restaurant.image_url ||
+                    "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38"
+                  }
                   alt={review.restaurant.name}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-lg font-semibold">{review.restaurant.name}</h3>
+                      <h3 className="text-lg font-semibold">
+                        {review.restaurant.name}
+                      </h3>
                       <div className="flex items-center gap-2 mt-2">
                         <span className="inline-block bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">
                           {review.restaurant.category?.name}
                         </span>
-                        <RestaurantMood text={review.comment} time={review.created_at} />
+                        <RestaurantMood
+                          text={review.comment}
+                          time={review.created_at}
+                        />
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-2">
                       <div className="flex items-center bg-yellow-100 px-2 py-1 rounded-full">
                         <Star className="h-4 w-4 text-yellow-500 fill-current" />
                         <span className="ml-1 text-sm font-medium text-yellow-700">
-                          {restaurantRatings[review.restaurant.id]?.average.toFixed(1)} ({restaurantRatings[review.restaurant.id]?.count})
+                          {restaurantRatings[
+                            review.restaurant.id
+                          ]?.average.toFixed(1)}{" "}
+                          ({restaurantRatings[review.restaurant.id]?.count})
                         </span>
                       </div>
                       <button
@@ -520,8 +614,8 @@ function App() {
                         disabled={likingRestaurant === review.restaurant.id}
                         className={`flex items-center gap-1 px-3 py-1 rounded-full transition-colors ${
                           restaurantLikes[review.restaurant.id]?.hasLiked
-                            ? 'bg-red-100 text-red-500'
-                            : 'bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500'
+                            ? "bg-red-100 text-red-500"
+                            : "bg-gray-100 text-gray-500 hover:bg-red-50 hover:text-red-500"
                         }`}
                       >
                         {likingRestaurant === review.restaurant.id ? (
@@ -529,7 +623,9 @@ function App() {
                         ) : (
                           <Heart
                             className={`h-4 w-4 ${
-                              restaurantLikes[review.restaurant.id]?.hasLiked ? 'fill-current' : ''
+                              restaurantLikes[review.restaurant.id]?.hasLiked
+                                ? "fill-current"
+                                : ""
                             }`}
                           />
                         )}
@@ -540,40 +636,52 @@ function App() {
                     </div>
                   </div>
 
-                  {review.restaurant.tags && review.restaurant.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {review.restaurant.tags.map(tag => (
-                        <span
-                          key={tag.id}
-                          className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
-                        >
-                          {tag.name}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                  {review.restaurant.tags &&
+                    review.restaurant.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {review.restaurant.tags.map((tag) => (
+                          <span
+                            key={tag.id}
+                            className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
+                          >
+                            {tag.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
                   <div className="flex items-center mt-2 text-gray-500">
                     <MapPin className="h-4 w-4" />
-                    <span className="ml-1 text-sm">{review.restaurant.address}</span>
+                    <span className="ml-1 text-sm">
+                      {review.restaurant.address}
+                    </span>
                   </div>
-                  <p className="mt-2 text-gray-600 line-clamp-2">{review.comment}</p>
+                  <p className="mt-2 text-gray-600 line-clamp-2">
+                    {review.comment}
+                  </p>
                   <div className="mt-4 flex items-center justify-between">
                     <div className="flex items-center">
                       <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                         {review.user.avatar_url ? (
-                          <img src={review.user.avatar_url} alt="Profile" className="h-full w-full object-cover" />
+                          <img
+                            src={review.user.avatar_url}
+                            alt="Profile"
+                            className="h-full w-full object-cover"
+                          />
                         ) : (
                           <User className="h-4 w-4 text-gray-600" />
                         )}
                       </div>
-                      <span className="ml-2 text-sm font-medium">{review.user.email}</span>
+                      <span className="ml-2 text-sm font-medium">
+                        {review.user.email}
+                      </span>
                     </div>
                     <div className="flex items-center space-x-4">
                       <span className="text-sm text-gray-500">
                         {new Date(review.created_at).toLocaleDateString()}
                       </span>
-                      {(user?.id === review.user.id || user?.email === 'linhdeptrai@gmail.com') && (
+                      {(user?.id === review.user.id ||
+                        user?.email === "linhdeptrai@gmail.com") && (
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
@@ -610,10 +718,16 @@ function App() {
               className="text-gray-600 flex flex-col items-center"
             >
               <Camera className="h-6 w-6" />
-              <span className="text-xs mt-1">Post</span>
+              <span className="text-xs mt-1">Đăng bài Review</span>
             </button>
-            <button 
-              onClick={() => setShowProfile(true)}
+            <button
+              onClick={() => {
+                if (user) {
+                  setShowProfile(true);
+                } else {
+                  setIsAuthModalOpen(true);
+                }
+              }}
               className="text-gray-600 flex flex-col items-center"
             >
               <User className="h-6 w-6" />
@@ -623,13 +737,19 @@ function App() {
         </div>
       </nav>
 
-      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
-      <CreatePostModal 
-        isOpen={isCreatePostModalOpen} 
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => {
+          setIsAuthModalOpen(false);
+          fetchReviews();
+        }}
+      />
+      <CreatePostModal
+        isOpen={isCreatePostModalOpen}
         onClose={() => {
           setIsCreatePostModalOpen(false);
           fetchReviews();
-        }} 
+        }}
       />
       <ReviewDetailsModal
         isOpen={!!selectedReview}
