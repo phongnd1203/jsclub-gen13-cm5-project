@@ -1,8 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { User, Camera, Mail, Edit2, Check, X, ArrowLeft, Phone } from 'lucide-react';
-import { supabase } from '../lib/supabase';
-import { useAuthStore } from '../store/authStore';
-import { ImageUpload } from './ImageUpload';
+import React, { useState, useEffect } from "react";
+import {
+  User,
+  Camera,
+  Mail,
+  Edit2,
+  Check,
+  X,
+  ArrowLeft,
+  Phone,
+} from "lucide-react";
+import { supabase } from "../lib/supabase";
+import { useAuthStore } from "../store/authStore";
+import { ImageUpload } from "./ImageUpload";
 
 interface Profile {
   id: string;
@@ -21,12 +30,12 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Edit form state
-  const [username, setUsername] = useState('');
-  const [bio, setBio] = useState('');
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -42,59 +51,60 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
       setError(null);
 
       const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
         .single();
 
-      if (profileError && profileError.code !== 'PGRST116') {
+      if (profileError && profileError.code !== "PGRST116") {
         throw profileError;
       }
 
       // If profile doesn't exist, create one
       if (!profileData) {
         const { data: newProfile, error: createError } = await supabase
-          .from('profiles')
+          .from("profiles")
           .insert([
             {
               id: user.id,
-              username: user.email?.split('@')[0] || 'user',
-              bio: '',
-              avatar_url: '',
-              phone_number: '',
+              username: user.email?.split("@")[0] || "user",
+              bio: "",
+              avatar_url: "",
+              phone_number: "",
               updated_at: new Date().toISOString(),
-            }
+            },
           ])
           .select()
           .single();
 
         if (createError) throw createError;
-        
+
         setProfile(newProfile);
         setUsername(newProfile.username);
-        setBio(newProfile.bio || '');
-        setAvatarUrl(newProfile.avatar_url || '');
-        setPhoneNumber(newProfile.phone_number || '');
+        setBio(newProfile.bio || "");
+        setAvatarUrl(newProfile.avatar_url || "");
+        setPhoneNumber(newProfile.phone_number || "");
       } else {
         setProfile(profileData);
         setUsername(profileData.username);
-        setBio(profileData.bio || '');
-        setAvatarUrl(profileData.avatar_url || '');
-        setPhoneNumber(profileData.phone_number || '');
+        setBio(profileData.bio || "");
+        setAvatarUrl(profileData.avatar_url || "");
+        setPhoneNumber(profileData.phone_number || "");
       }
     } catch (err) {
-      console.error('Error fetching profile:', err);
-      setError('Failed to load profile');
+      console.error("Error fetching profile:", err);
+      setError("Failed to load profile");
     } finally {
       setLoading(false);
     }
   };
 
   const validateUsername = (username: string) => {
-    if (!username) return 'Username is required';
-    if (username.length < 3) return 'Username must be at least 3 characters';
-    if (username.length > 30) return 'Username must be less than 30 characters';
-    if (!/^[a-zA-Z0-9_]+$/.test(username)) return 'Username can only contain letters, numbers, and underscores';
+    if (!username) return "Username is required";
+    if (username.length < 3) return "Username must be at least 3 characters";
+    if (username.length > 30) return "Username must be less than 30 characters";
+    if (!/^[a-zA-Z0-9_]+$/.test(username))
+      return "Username can only contain letters, numbers, and underscores";
     return null;
   };
 
@@ -114,14 +124,14 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
       // Check if username is taken (if changed)
       if (username !== profile?.username) {
         const { data: existingUser } = await supabase
-          .from('profiles')
-          .select('id')
-          .eq('username', username)
-          .neq('id', user.id)
+          .from("profiles")
+          .select("id")
+          .eq("username", username)
+          .neq("id", user.id)
           .single();
 
         if (existingUser) {
-          throw new Error('Username is already taken');
+          throw new Error("Username is already taken");
         }
       }
 
@@ -134,17 +144,17 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
       };
 
       const { error: updateError } = await supabase
-        .from('profiles')
+        .from("profiles")
         .update(updates)
-        .eq('id', user.id);
+        .eq("id", user.id);
 
       if (updateError) throw updateError;
 
-      setProfile(prev => prev ? { ...prev, ...updates } : null);
+      setProfile((prev) => (prev ? { ...prev, ...updates } : null));
       setIsEditing(false);
     } catch (err) {
-      console.error('Error updating profile:', err);
-      setError(err instanceof Error ? err.message : 'Failed to update profile');
+      console.error("Error updating profile:", err);
+      setError(err instanceof Error ? err.message : "Failed to update profile");
     } finally {
       setSaving(false);
     }
@@ -163,7 +173,10 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
       {/* Header */}
       <div className="bg-white shadow-sm p-4 flex items-center justify-between mb-6">
         <div className="flex items-center space-x-4">
-          <button onClick={onClose} className="text-gray-600 hover:text-gray-800">
+          <button
+            onClick={onClose}
+            className="text-gray-600 hover:text-gray-800"
+          >
             <ArrowLeft className="h-6 w-6" />
           </button>
           <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
@@ -180,23 +193,23 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
               ) : (
                 <>
                   <Check className="h-4 w-4 mr-2" />
-                  Save
+                  Lưu
                 </>
               )}
             </button>
             <button
               onClick={() => {
                 setIsEditing(false);
-                setUsername(profile?.username || '');
-                setBio(profile?.bio || '');
-                setAvatarUrl(profile?.avatar_url || '');
-                setPhoneNumber(profile?.phone_number || '');
+                setUsername(profile?.username || "");
+                setBio(profile?.bio || "");
+                setAvatarUrl(profile?.avatar_url || "");
+                setPhoneNumber(profile?.phone_number || "");
                 setError(null);
               }}
               className="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
             >
               <X className="h-4 w-4 mr-2" />
-              Cancel
+              Hủy
             </button>
           </div>
         ) : (
@@ -205,7 +218,7 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
             className="flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
           >
             <Edit2 className="h-4 w-4 mr-2" />
-            Edit Profile
+            Sửa hồ sơ
           </button>
         )}
       </div>
@@ -231,7 +244,11 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
                 ) : (
                   <div className="h-24 w-24 rounded-full border-4 border-white bg-gray-200 flex items-center justify-center overflow-hidden">
                     {avatarUrl ? (
-                      <img src={avatarUrl} alt="Profile" className="h-full w-full object-cover" />
+                      <img
+                        src={avatarUrl}
+                        alt="Profile"
+                        className="h-full w-full object-cover"
+                      />
                     ) : (
                       <User className="h-12 w-12 text-gray-400" />
                     )}
@@ -246,7 +263,9 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
               <div className="flex flex-col space-y-2">
                 {isEditing ? (
                   <>
-                    <label className="text-sm font-medium text-gray-700">Username</label>
+                    <label className="text-sm font-medium text-gray-700">
+                      Tên người dùng
+                    </label>
                     <input
                       type="text"
                       value={username}
@@ -256,7 +275,9 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
                     />
                   </>
                 ) : (
-                  <h2 className="text-2xl font-bold text-gray-900">{profile?.username}</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {profile?.username}
+                  </h2>
                 )}
                 <div className="flex items-center text-gray-600">
                   <Mail className="h-4 w-4 mr-2" />
@@ -273,7 +294,9 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
                       placeholder="Enter phone number"
                     />
                   ) : (
-                    <span>{profile?.phone_number || 'No phone number added'}</span>
+                    <span>
+                      {profile?.phone_number || "No phone number added"}
+                    </span>
                   )}
                 </div>
               </div>
@@ -281,7 +304,9 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
 
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Bio</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Giới thiệu
+                </h3>
                 {isEditing ? (
                   <textarea
                     value={bio}
@@ -290,13 +315,16 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
                     placeholder="Tell us about yourself..."
                   />
                 ) : (
-                  <p className="text-gray-600">{profile?.bio || 'No bio yet'}</p>
+                  <p className="text-gray-600">
+                    {profile?.bio || "No bio yet"}
+                  </p>
                 )}
               </div>
 
               {!isEditing && profile?.updated_at && (
                 <div className="text-sm text-gray-500">
-                  Last updated: {new Date(profile.updated_at).toLocaleDateString()}
+                  Last updated:{" "}
+                  {new Date(profile.updated_at).toLocaleDateString()}
                 </div>
               )}
             </div>
