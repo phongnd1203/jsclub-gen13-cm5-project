@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  User,
-  Camera,
-  Mail,
-  Edit2,
-  Check,
-  X,
-  ArrowLeft,
-  Phone,
-} from "lucide-react";
+import { User, Mail, Edit2, Check, X, ArrowLeft, Phone } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { useAuthStore } from "../store/authStore";
 import { ImageUpload } from "./ImageUpload";
