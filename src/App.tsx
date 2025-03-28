@@ -475,7 +475,7 @@ function App() {
             <div className="flex items-center">
               <h1 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-transparent bg-clip-text">
-                  Riviu HOLA
+                  RIVIU HOLA
                 </span>
               </h1>
             </div>

@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  User,
-  Camera,
-  Mail,
-  Edit2,
-  Check,
-  X,
-  ArrowLeft,
-  Phone,
-} from "lucide-react";
+import { User, Mail, Edit2, Check, X, ArrowLeft, Phone } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { useAuthStore } from "../store/authStore";
 import { ImageUpload } from "./ImageUpload";
@@ -218,7 +209,7 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
             className="flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
           >
             <Edit2 className="h-4 w-4 mr-2" />
-            Edit Profile
+            Sửa hồ sơ
           </button>
         )}
       </div>
@@ -305,7 +296,7 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Bio
+                  Giới thiệu
                 </h3>
                 {isEditing ? (
                   <textarea
