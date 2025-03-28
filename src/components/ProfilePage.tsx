@@ -305,7 +305,7 @@ export function ProfilePage({ onClose }: { onClose: () => void }) {
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Bio
+                  Giới thiệu
                 </h3>
                 {isEditing ? (
                   <textarea
