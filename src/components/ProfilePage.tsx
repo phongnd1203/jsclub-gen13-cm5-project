@@ -9,7 +9,7 @@ interface Profile {
   username: string;
   avatar_url?: string;
   bio?: string;
-  phone_number?: string;
+  phone_number?: number;
   created_at: string;
   updated_at: string;
 }

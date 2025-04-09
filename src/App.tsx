@@ -26,7 +26,6 @@ import { ProfilePage } from "./components/ProfilePage";
 import { useAuthStore } from "./store/authStore";
 import { supabase } from "./lib/supabase";
 import { RestaurantMood } from "./components/RestaurantMood";
-
 interface Review {
   id: string;
   restaurant: {
@@ -475,7 +474,7 @@ function App() {
             <div className="flex items-center">
               <h1 className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-transparent bg-clip-text">
-                  RIVIU HOLA
+                  <button onClick={fetchReviews}>RIVIU HOLA</button>
                 </span>
               </h1>
             </div>
@@ -500,7 +499,7 @@ function App() {
                           className="h-full w-full object-cover"
                         />
                       ) : (
-                        <User className="h-6 w-6 text-gray-500" />
+                        <User className="h-6 w-6 text-gray-500 transform translate-x-1 mt-1" />
                       )}
                     </div>
                     <span className="text-sm font-medium text-gray-700">
@@ -594,22 +593,26 @@ function App() {
                   : "Hãy đăng nhập hoặc đăng ký để xem và đánh giá"}
               </p>
               <div>
-                <div className="flex flex-col justify-center items-center h-screen">
-                  <a
-                    href="#"
-                    onClick={handleAuthClick}
-                    className="flex items-center justify-center w-20 h-20 bg-green-500 text-white rounded-full shadow-xl hover:bg-green-600 transition transform -translate-y-80"
-                  >
-                    {user ? (
-                      <LogOut className="h-10 w-10" />
-                    ) : (
-                      <User className="h-10 w-10" />
+                {!user && (
+                  <div className="flex flex-col justify-center items-center h-screen">
+                    <a
+                      href="#"
+                      onClick={handleAuthClick}
+                      className="flex items-center justify-center w-20 h-20 bg-green-500 text-white rounded-full shadow-xl hover:bg-green-600 transition transform -translate-y-80"
+                    >
+                      {user ? (
+                        <LogOut className="h-10 w-10" />
+                      ) : (
+                        <User className="h-10 w-10" />
+                      )}
+                    </a>
+                    {!user && (
+                      <p className="mt-4 text-lg text-gray-700 -translate-y-80">
+                        Đăng Nhập
+                      </p>
                     )}
-                  </a>
-                  <p className="mt-4 text-lg text-gray-700 -translate-y-80">
-                    Đăng Nhập
-                  </p>
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           ) : (
@@ -780,6 +783,14 @@ function App() {
               <User className="h-6 w-6" />
               <span className="text-xs mt-1">Profile</span>
             </button>
+            {/* các bài đăng */}
+            {/* <button
+              onClick={handleCreatePost}
+              className="text-gray-600 flex flex-col items-center"
+            >
+              <Camera className="h-6 w-6" />
+              <span className="text-xs mt-1">Các bài đã đăng</span>
+            </button> */}
           </div>
         </div>
       </nav>
