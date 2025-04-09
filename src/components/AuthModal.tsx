@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useAuthStore } from '../store/authStore';
-
+import React, { useState } from "react";
+import { useAuthStore } from "../store/authStore";
+import { X } from "lucide-react";
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -8,41 +8,49 @@ interface AuthModalProps {
 
 export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phone, setPhone] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [error, setError] = useState("");
   const { signIn, signUp } = useAuthStore();
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
       if (isLogin) {
         await signIn(email, password);
       } else {
         if (!phone && !isLogin) {
-          setError('Phone number is required for registration');
+          setError("Phone number is required for registration");
           return;
         }
         await signUp(email, password, phone);
       }
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(err instanceof Error ? err.message : "An error occurred");
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-8 max-w-md w-full">
+      <div className="bg-white rounded-lg p-8 max-w-md w-full relative">
+        {/* Nút đóng ở góc phải */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+        >
+          <X className="h-6 w-6" />
+        </button>
+
         <h2 className="text-2xl font-bold mb-6">
-          {isLogin ? 'Sign In' : 'Sign Up'}
+          {isLogin ? "Sign In" : "Sign Up"}
         </h2>
-        
+
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
@@ -96,19 +104,21 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
             type="submit"
             className="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors"
           >
-            {isLogin ? 'Sign In' : 'Sign Up'}
+            {isLogin ? "Sign In" : "Sign Up"}
           </button>
 
           <button
             type="button"
             onClick={() => {
               setIsLogin(!isLogin);
-              setError('');
-              setPhone('');
+              setError("");
+              setPhone("");
             }}
             className="w-full text-orange-500 hover:underline"
           >
-            {isLogin ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
+            {isLogin
+              ? "Don't have an account? Sign Up"
+              : "Already have an account? Sign In"}
           </button>
         </form>
       </div>

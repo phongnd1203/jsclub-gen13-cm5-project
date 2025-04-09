@@ -43,11 +43,11 @@ interface Comment {
   replies: CommentReply[];
 }
 
-interface Rating {
-  id: string;
-  score: number;
-  user_id: string;
-}
+// interface Rating {
+//   id: string;
+//   score: number;
+//   user_id: string;
+// }
 
 interface ReviewDetailsModalProps {
   isOpen: boolean;
@@ -74,12 +74,12 @@ interface ReviewDetailsModalProps {
 const EMOJI_OPTIONS = ["👍", "❤️", "😋", "🔥", "👏", "😍"];
 
 function getGoogleMapsUrl(address: string) {
-  const encodedAddress = encodeURIComponent(address);
+  // const encodedAddress = encodeURIComponent(address);
   return `${address}`;
 }
 
 function getGoogleMapsDirectionsUrl(address: string) {
-  const encodedAddress = encodeURIComponent(address);
+  // const encodedAddress = encodeURIComponent(address);
   return `${address}`;
 }
 
@@ -492,6 +492,24 @@ export function ReviewDetailsModal({
     }
   };
 
+  const handleDeleteComment = async (commentId: string) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from("comments")
+        .delete()
+        .eq("id", commentId)
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      fetchComments();
+    } catch (err) {
+      console.error("Error deleting comment:", err);
+    }
+  };
+
   if (!isOpen || !review) return null;
 
   const mapUrl = getGoogleMapsUrl(review.restaurant.address);
@@ -648,7 +666,7 @@ export function ReviewDetailsModal({
               </div>
             </div>
           </div>
-
+          {/* Comment */}
           <div className="border-t pt-6">
             <h3 className="text-lg font-semibold mb-4">Bình luận</h3>
 
@@ -753,6 +771,15 @@ export function ReviewDetailsModal({
                                 </button>
                               </>
                             )}
+                            {/* Delete comment */}
+                            {user && user.id === comment.user_id && (
+                              <button
+                                onClick={() => handleDeleteComment(comment.id)}
+                                className="text-red-500 hover:text-red-600"
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </button>
+                            )}
                           </div>
                         </div>
                         <p className="text-xs text-gray-500 mt-1">
@@ -802,6 +829,7 @@ export function ReviewDetailsModal({
                                       day: "numeric",
                                     })}
                                   </p>
+                                  {/* Delete Reply comment */}
                                   {user && user.id === reply.user_id && (
                                     <button
                                       onClick={() =>

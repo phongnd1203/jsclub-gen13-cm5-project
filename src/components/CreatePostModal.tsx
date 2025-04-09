@@ -272,6 +272,7 @@ export function CreatePostModal({ isOpen, onClose }: CreatePostModalProps) {
             </label>
             <input
               type="text"
+              placeholder="link gg map hoặc địa chỉ cụ thể"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
